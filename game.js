@@ -23,6 +23,9 @@ let wArray = wordToGuess.split('')
 let guessArray = []
 let guessCount = 0
 let blocked = false;
+let overlay = document.querySelector('.overlay')
+
+overlay.firstElementChild.innerHTML = wordToGuess;
 
 keyboard.addEventListener('mouseup', (e) => {
   if (blocked === false) {
@@ -68,6 +71,15 @@ function turn() {
         key.style = "background-color: gray"
       }
     })
+    if (guessArray.join() === wArray.join()) {
+      overlay.addEventListener('transitionend', (e) => {
+        console.log(e)
+      })
+      overlay.style.display = 'flex'
+      setTimeout(() => {
+        overlay.classList.add('game-end')
+      }, 1)
+    }
     guessCount++
     guessArray = []
   } else {

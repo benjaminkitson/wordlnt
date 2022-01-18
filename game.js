@@ -71,7 +71,7 @@ function turn() {
         key.style = "background-color: gray"
       }
     })
-    if (guessArray.join() === wArray.join()) {
+    if (guessArray.join() === wArray.join() || guessCount === 5) {
       overlay.addEventListener('transitionend', (e) => {
         console.log(e)
       })

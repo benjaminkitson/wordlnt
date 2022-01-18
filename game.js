@@ -11,13 +11,23 @@ let guessArray = []
 keyboard.addEventListener('mouseup', (e) => {
   if (e.target.getAttribute("data-key") === 'pop') {
     guessArray.pop()
-    guessArray.forEach((letter, i) => {
-      firstGuess.children[i].innerHTML = letter
+    const guess = Array.from(firstGuess.children)
+    guess.forEach((cell, i) => {
+      if (guessArray[i]) {
+        cell.innerHTML = guessArray[i]
+      } else {
+        cell.innerHTML = ""
+      }
     })
   } else if (guessArray.length <= 4 && e.target.getAttribute("data-key")) {
     guessArray.push(e.target.getAttribute("data-key"))
-    guessArray.forEach((letter, i) => {
-      firstGuess.children[i].innerHTML = letter
+    const guess = Array.from(firstGuess.children)
+    guess.forEach((cell, i) => {
+      if (guessArray[i]) {
+        cell.innerHTML = guessArray[i]
+      } else {
+        cell.innerHTML = ""
+      }
     })
   }
   console.log(guessArray)

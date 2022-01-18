@@ -25,27 +25,29 @@ let guessCount = 0
 let blocked = false;
 
 keyboard.addEventListener('mouseup', (e) => {
-  console.log(e.target.getAttribute('data-key'))
-  if (e.target.getAttribute('data-key') === 'turn') {
-    if (allWords.includes(guessArray.join('').toLowerCase())) {
-      turn()
-    } else {
-      blocked = true
-      const guess = Array.from(guesses[guessCount].children)
-      guess.forEach((cell) => {
-        cell.addEventListener('transitionend', (e) => {
-          cell.classList.remove('blocked')
+  if (blocked === false) {
+    console.log(e.target.getAttribute('data-key'))
+    if (e.target.getAttribute('data-key') === 'turn') {
+      if (allWords.includes(guessArray.join('').toLowerCase())) {
+        turn()
+      } else {
+        blocked = true
+        const guess = Array.from(guesses[guessCount].children)
+        guess.forEach((cell) => {
+          cell.addEventListener('transitionend', (e) => {
+            cell.classList.remove('blocked')
+          })
+          cell.classList.add('blocked')
         })
-        cell.classList.add('blocked')
-      })
-      blocked = false
+        blocked = false
+      }
+    } else if (e.target.getAttribute('data-key') === 'del') {
+      del()
+    } else if (guessArray.length <= 4 && e.target.getAttribute('data-key')) {
+      letter(e)
     }
-  } else if (e.target.getAttribute('data-key') === 'del') {
-    del()
-  } else if (guessArray.length <= 4 && e.target.getAttribute('data-key')) {
-    letter(e)
+    console.log(guessArray)
   }
-  console.log(guessArray)
 })
 
 function turn() {

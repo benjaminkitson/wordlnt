@@ -22,15 +22,23 @@ console.log(wordToGuess)
 let wArray = wordToGuess.split('')
 let guessArray = []
 let guessCount = 0
+let blocked = false;
 
 keyboard.addEventListener('mouseup', (e) => {
-  console.log(e)
   console.log(e.target.getAttribute('data-key'))
   if (e.target.getAttribute('data-key') === 'turn') {
     if (allWords.includes(guessArray.join('').toLowerCase())) {
       turn()
     } else {
-      console.log('invalid word')
+      blocked = true
+      const guess = Array.from(guesses[guessCount].children)
+      guess.forEach((cell) => {
+        cell.addEventListener('transitionend', (e) => {
+          cell.classList.remove('blocked')
+        })
+        cell.classList.add('blocked')
+      })
+      blocked = false
     }
   } else if (e.target.getAttribute('data-key') === 'del') {
     del()

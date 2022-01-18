@@ -87,8 +87,27 @@ body {
   font-size: 14px;
   border-radius: 4px;
   margin: 4px;
+  transition: all 0.5s
 }
 
 .key.wide {
   width: 48px;
+}
+
+.incorrect {
+  background-color: gray;
+  color: white;
+  transition: all 0.5s
+}
+
+.correct {
+  background-color: green;
+  color: white;
+  transition: all 0.5s
+}
+
+.almost {
+  background-color: rgb(244, 218, 20);
+  color: white;
+  transition: all 0.5s
 }

@@ -22,6 +22,8 @@ let guessArray = []
 let guessCount = 0
 
 keyboard.addEventListener('mouseup', (e) => {
+  console.log(e)
+  console.log(e.target.getAttribute('data-key'))
   if (e.target.getAttribute('data-key') === 'turn') {
     if (words.includes(guessArray.join('').toLowerCase())) {
       turn()

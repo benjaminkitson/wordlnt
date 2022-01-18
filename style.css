@@ -88,7 +88,7 @@ body {
   font-size: 18px;
   border-radius: 8px;
   margin: 2px;
-  transition: all 0.5s
+  transition: all 0.5s;
 }
 
 .key.wide {
@@ -111,4 +111,9 @@ body {
   background-color: rgb(244, 218, 20);
   color: white;
   transition: all 0.5s
+}
+
+i {
+  position: relative;
+  z-index: -1;
 }

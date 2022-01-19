@@ -57,18 +57,19 @@ function turn() {
   if (guessArray.length === 5) {
     const guess = Array.from(guesses[guessCount].children)
     guess.forEach((cell, i) => {
+
       if (cell.innerHTML === wArray[i]) {
         cell.classList.add('correct')
         let key = document.querySelector(`[data-key='${cell.innerHTML}']`)
-        key.style = "background-color: rgb(0, 119, 183)"
+        key.classList.add('correct')
       } else if (wArray.includes(cell.innerHTML)) {
         cell.classList.add('almost')
         let key = document.querySelector(`[data-key='${cell.innerHTML}']`)
-        key.style = "background-color: rgb(255, 169, 20)"
+        key.classList.add('almost')
       } else {
         cell.classList.add('incorrect')
         let key = document.querySelector(`[data-key='${cell.innerHTML}']`)
-        key.style = "background-color: rgb(150, 150, 150)"
+        key.classList.add('incorrect')
       }
     })
     if (guessArray.join() === wArray.join() || guessCount === 5) {

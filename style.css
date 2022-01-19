@@ -8,6 +8,7 @@
 body {
   margin: 0;
   font-weight: 700;
+  background: linear-gradient(rgba(0, 119, 183, 0.1), rgba(0, 139, 213, 0.3));
 }
 
 .content {

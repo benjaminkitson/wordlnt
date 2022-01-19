@@ -14,10 +14,10 @@ body {
 .content {
   display: flex;
   width: 100vw;
-  height: 85vh;
+  height: 88vh;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   overflow: scroll;
   padding-top: 20px;
 }

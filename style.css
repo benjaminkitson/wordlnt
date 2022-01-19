@@ -1,6 +1,6 @@
 
 html {
-  background-color: rgba(0, 119, 183, 0.6)
+  background-color: rgba(0, 119, 183, 1)
 }
 
 * {
@@ -23,7 +23,7 @@ body {
   justify-content: flex-start;
   overflow: scroll;
   padding-top: 30px;
-  background: linear-gradient(rgba(0, 119, 183, 0), rgba(0, 139, 213, 0.1));
+  background: white;
 }
 
 .heading {

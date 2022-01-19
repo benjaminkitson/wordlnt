@@ -60,15 +60,15 @@ function turn() {
       if (cell.innerHTML === wArray[i]) {
         cell.classList.add('correct')
         let key = document.querySelector(`[data-key='${cell.innerHTML}']`)
-        key.style = "background-color: green"
+        key.style = "background-color: rgb(0, 119, 183)"
       } else if (wArray.includes(cell.innerHTML)) {
         cell.classList.add('almost')
         let key = document.querySelector(`[data-key='${cell.innerHTML}']`)
-        key.style = "background-color: rgb(244,218,20)"
+        key.style = "background-color: rgb(255, 169, 20)"
       } else {
         cell.classList.add('incorrect')
         let key = document.querySelector(`[data-key='${cell.innerHTML}']`)
-        key.style = "background-color: gray"
+        key.style = "background-color: rgb(150, 150, 150)"
       }
     })
     if (guessArray.join() === wArray.join() || guessCount === 5) {

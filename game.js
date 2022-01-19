@@ -72,9 +72,6 @@ function turn() {
       }
     })
     if (guessArray.join() === wArray.join() || guessCount === 5) {
-      overlay.addEventListener('transitionend', (e) => {
-        console.log(e)
-      })
       overlay.style.display = 'flex'
       setTimeout(() => {
         overlay.classList.add('game-end')

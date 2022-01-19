@@ -23,7 +23,7 @@ body {
   justify-content: flex-start;
   overflow: scroll;
   padding-top: 30px;
-  background: white;
+  background: linear-gradient(rgb(186, 220, 255), white);
 }
 
 .heading {

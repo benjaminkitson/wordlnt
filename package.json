@@ -1,0 +1,19 @@
+{
+  "name": "wordlnt",
+  "version": "1.0.0",
+  "description": "A clone of Wordle!",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/benjaminkitson/wordlnt.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/benjaminkitson/wordlnt/issues"
+  },
+  "homepage": "https://github.com/benjaminkitson/wordlnt#readme"
+}

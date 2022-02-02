@@ -2,6 +2,7 @@ const path = require('path');
 const express = require('express');
 const hbs = require('hbs');
 const request = require('postman-request');
+const wordGen = require('./word-gen.js')
 
 const app = express();
 
@@ -16,7 +17,10 @@ app.use(express.static(
 ))
 
 app.get('', (req, res) => {
-  res.render('index.hbs')
+  const word = wordGen()
+  res.render('index.hbs', {
+    newWord: word
+  })
 })
 
 app.listen(PORT, () => {

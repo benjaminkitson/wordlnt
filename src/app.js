@@ -14,15 +14,17 @@ hbs.registerPartials(path.join(__dirname, '../templates/partials'));
 
 app.use(express.static(
   path.join(__dirname, "../public")
-))
+));
 
 app.get('', (req, res) => {
+  res.render('index.hbs')
+});
+
+app.get('/whywouldyouevencheatatthisgame', (req, res) => {
   const word = wordGen()
-  res.render('index.hbs', {
-    newWord: word
-  })
-})
+  res.send({word})
+});
 
 app.listen(PORT, () => {
   console.log("It has begun!")
-})
+});

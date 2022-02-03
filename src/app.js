@@ -32,7 +32,10 @@ setInterval(() => {
 
 app.get('/whywouldyouevencheatatthisgame', (req, res) => {
   const word = newWord
-  res.send({word})
+  res.send({
+    word,
+    epoch
+  })
 });
 
 app.listen(PORT, () => {

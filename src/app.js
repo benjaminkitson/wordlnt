@@ -34,7 +34,8 @@ app.get('/whywouldyouevencheatatthisgame', (req, res) => {
   const word = newWord
   res.send({
     word,
-    epoch
+    epoch,
+    currentTime: Date.now()
   })
 });
 

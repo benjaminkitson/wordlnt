@@ -69,7 +69,11 @@ function turn() {
       if (cell.innerHTML === wArray[i]) {
         cell.classList.add('correct')
         let key = document.querySelector(`[data-key='${cell.innerHTML}']`)
+        if (key.classList.contains('almost')) {
+          key.classList.replace('almost', 'correct')
+        } else {
         key.classList.add('correct')
+        }
       } else if (wArray.includes(cell.innerHTML)) {
         cell.classList.add('almost')
         let key = document.querySelector(`[data-key='${cell.innerHTML}']`)

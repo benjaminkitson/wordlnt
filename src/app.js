@@ -20,8 +20,18 @@ app.get('', (req, res) => {
   res.render('index.hbs')
 });
 
+let newWord = "HELLO"
+let epoch = 1643904600000
+
+setInterval(() => {
+  if (Date.now() > epoch) {
+    word = wordGen()
+    epoch += 180000
+  }
+}, 1000);
+
 app.get('/whywouldyouevencheatatthisgame', (req, res) => {
-  const word = wordGen()
+  const word = newWord
   res.send({word})
 });
 

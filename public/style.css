@@ -60,6 +60,10 @@ body {
   font-size: 20px;
 }
 
+.info-button:hover {
+  cursor: pointer;
+}
+
 /*/// Guesses grid ///*/
 
 .word-grid {
@@ -185,6 +189,14 @@ i {
   border-radius: 12px;
   font-size: 30px;
   letter-spacing: 4px;
+}
+
+.info.overlay-details {
+  text-align: center;
+  width: 700px;
+  height: 400px;
+  padding: 20px;
+  font-size: 18px;
 }
 
 .game-end {

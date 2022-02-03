@@ -25,13 +25,13 @@ fetch('/whywouldyouevencheatatthisgame')
   .then(data => {
     wordToGuess = data.word
     wArray = wordToGuess.split('')
-    overlay.firstElementChild.innerHTML = wordToGuess;
+    endOverlay.firstElementChild.innerHTML = wordToGuess;
   });
 
 let guessArray = []
 let guessCount = 0
 let blocked = false;
-let overlay = document.querySelector('.overlay')
+let endOverlay = document.querySelector('.end.overlay')
 
 
 keyboard.addEventListener('mouseup', (e) => {
@@ -51,6 +51,7 @@ keyboard.addEventListener('mouseup', (e) => {
           cell.classList.add('blocked')
         })
         blocked = false
+        // This almost definitely doesn't work as intended, but for now it seems fine
       }
     } else if (e.target.getAttribute('data-key') === 'del') {
       del()
@@ -85,9 +86,9 @@ function turn() {
       }
     })
     if (guessArray.join() === wArray.join() || guessCount === 5) {
-      overlay.style.display = 'flex'
+      endOverlay.style.display = 'flex'
       setTimeout(() => {
-        overlay.classList.add('game-end')
+        endOverlay.classList.add('game-end')
       }, 1)
     }
     guessCount++

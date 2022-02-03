@@ -31,8 +31,24 @@ fetch('/whywouldyouevencheatatthisgame')
 let guessArray = []
 let guessCount = 0
 let blocked = false;
-let endOverlay = document.querySelector('.end.overlay')
+const endOverlay = document.querySelector('.end.overlay')
+const infoButton = document.querySelector('.info-button')
+const infoOverlay = document.querySelector('.info.overlay')
+const infoOverlayDetails = document.querySelector('.info.overlay-details')
 
+
+infoButton.addEventListener('mouseup', () => {
+  infoOverlay.style.display = 'flex';
+  setTimeout(() => {
+    infoOverlay.classList.add('game-end')
+  }, 1)
+  window.addEventListener('mouseup', (e) => {
+    if (e.target === infoOverlay) {
+      infoOverlay.classList.remove('game-end')
+      infoOverlay.style.display = 'none'
+    }
+  })
+})
 
 keyboard.addEventListener('mouseup', (e) => {
   console.log(wordToGuess)

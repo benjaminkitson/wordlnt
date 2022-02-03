@@ -26,16 +26,39 @@ body {
   background: linear-gradient(white, rgb(186, 220, 255));
 }
 
-.heading {
+.header{
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   width: 100%;
   font-size: 40px;
   height: 10vh;
   border-bottom: 2px solid gray;
 }
 
+.icon-right {
+  width: 40px;
+  height: 40px;
+  margin-right: 40px;
+}
+
+.icon-left {
+  width: 40px;
+  height: 40px;
+  margin-right: 40px;
+}
+
+.icon {
+  border: 1px solid black;
+  height: 40px;
+  width: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid gray;
+  border-radius: 999em;
+  font-size: 20px;
+}
 
 /*/// Guesses grid ///*/
 
@@ -135,7 +158,6 @@ i {
   background-color: rgb(255, 77, 0);
   transition: all 0.2s
 }
-
 
 .overlay {
   display: none;

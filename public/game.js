@@ -43,6 +43,7 @@ infoButton.addEventListener('mouseup', () => {
     infoOverlay.classList.add('game-end')
   }, 1)
   window.addEventListener('mouseup', (e) => {
+    console.log(e)
     if (e.target === infoOverlay) {
       infoOverlay.classList.remove('game-end')
       infoOverlay.style.display = 'none'

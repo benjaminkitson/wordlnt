@@ -202,7 +202,9 @@ i {
   border-radius: 12px;
   font-size: 30px;
   letter-spacing: 6px;
+  color: white
 }
+
 
 .end-word, .end-timer {
   color: white;
@@ -233,6 +235,7 @@ i {
   height: 400px;
   padding: 20px;
   font-size: 18px;
+  letter-spacing: 2px;
 }
 
 .game-end {

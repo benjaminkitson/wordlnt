@@ -76,8 +76,9 @@ const infoOverlayDetails = document.querySelector('.info.overlay-details')
 
 // DEBUG BITS
 
-endOverlay.style.display = 'flex'
-endOverlay.classList.add('game-end')
+// endOverlay.style.display = 'flex'
+// endOverlay.classList.add('game-end')
+
 
 infoButton.addEventListener('mouseup', () => {
   infoOverlay.style.display = 'flex';

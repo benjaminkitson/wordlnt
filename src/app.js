@@ -26,7 +26,7 @@ let epoch = 1643911200000
 setInterval(() => {
   if (Date.now() > epoch) {
     newWord = wordGen()
-    epoch += 10800000
+    epoch += 14400000
   }
 }, 1000);
 

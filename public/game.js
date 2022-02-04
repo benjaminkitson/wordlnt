@@ -80,7 +80,6 @@ infoButton.addEventListener('mouseup', () => {
   setTimeout(() => {
     infoOverlay.classList.add('game-end')
     infoOverlay.addEventListener('mouseup', (e) => {
-      console.log(e)
       if (e.target === infoOverlay) {
         infoOverlay.classList.remove('game-end')
         infoOverlay.style.display = 'none'
@@ -90,9 +89,7 @@ infoButton.addEventListener('mouseup', () => {
 })
 
 keyboard.addEventListener('mouseup', (e) => {
-  console.log(wordToGuess)
   if (blocked === false) {
-    console.log(e.target.getAttribute('data-key'))
     if (e.target.getAttribute('data-key') === 'turn') {
       if (allWords.includes(guessArray.join('').toLowerCase())) {
         turn()
@@ -113,7 +110,6 @@ keyboard.addEventListener('mouseup', (e) => {
     } else if (guessArray.length <= 4 && e.target.getAttribute('data-key')) {
       letter(e)
     }
-    console.log(guessArray)
   }
 })
 

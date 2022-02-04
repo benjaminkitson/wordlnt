@@ -47,7 +47,7 @@ function nextTimerGen() {
 fetch('/whywouldyouevencheatatthisgame')
   .then(response => (response.json()))
   .then(data => {
-    nextGame = data.epoch + 10800000
+    nextGame = data.epoch
     if (debug === true) {
       wordToGuess = "DEBUG"
     } else {

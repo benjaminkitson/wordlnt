@@ -19,19 +19,28 @@ const allWords = words.concat(["aahed", "aalii", "aargh", "aarti", "abaca", "aba
 
 let wordToGuess
 let wArray
+let completed = false
+const endOverlay = document.querySelector('.end.overlay')
 
 fetch('/whywouldyouevencheatatthisgame')
   .then(response => (response.json()))
   .then(data => {
-    wordToGuess = data.word
-    wArray = wordToGuess.split('')
+    wordToGuess = data.word;
+    wArray = wordToGuess.split('');
     endOverlay.firstElementChild.innerHTML = wordToGuess;
+    gameData = window.localStorage;
+    if (gameData.solved === wordToGuess) {
+      endOverlay.style.display = 'flex'
+      endOverlay.classList.add('game-end')
+    }
+    console.log(gameData)
+
   });
 
 let guessArray = []
 let guessCount = 0
 let blocked = false;
-const endOverlay = document.querySelector('.end.overlay')
+
 const infoButton = document.querySelector('.info-button')
 const infoOverlay = document.querySelector('.info.overlay')
 const infoOverlayDetails = document.querySelector('.info.overlay-details')
@@ -103,16 +112,21 @@ function turn() {
       }
     })
     if (guessArray.join() === wArray.join() || guessCount === 5) {
-      endOverlay.style.display = 'flex'
-      setTimeout(() => {
-        endOverlay.classList.add('game-end')
-      }, 1)
+      gameData.solved = wordToGuess
+      gameEnd()
     }
     guessCount++
     guessArray = []
   } else {
     console.log("not enough letters m8")
   }
+}
+
+function gameEnd() {
+  endOverlay.style.display = 'flex'
+  setTimeout(() => {
+    endOverlay.classList.add('game-end')
+  }, 1)
 }
 
 function del() {

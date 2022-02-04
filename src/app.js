@@ -21,14 +21,14 @@ app.get('', (req, res) => {
 });
 
 let newWord = "HELLO"
-let epoch = 1643911200000
+let epoch = 1643965200000
 
 setInterval(() => {
   if (Date.now() > epoch) {
     newWord = wordGen()
-    epoch += 14400000
+    epoch += 10800000
   }
-}, 1000);
+}, 100);
 
 app.get('/whywouldyouevencheatatthisgame', (req, res) => {
   const word = newWord

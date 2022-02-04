@@ -41,14 +41,14 @@ infoButton.addEventListener('mouseup', () => {
   infoOverlay.style.display = 'flex';
   setTimeout(() => {
     infoOverlay.classList.add('game-end')
+    infoOverlay.addEventListener('mouseup', (e) => {
+      console.log(e)
+      if (e.target === infoOverlay) {
+        infoOverlay.classList.remove('game-end')
+        infoOverlay.style.display = 'none'
+      }
+    })
   }, 1)
-  window.addEventListener('mouseup', (e) => {
-    console.log(e)
-    if (e.target === infoOverlay) {
-      infoOverlay.classList.remove('game-end')
-      infoOverlay.style.display = 'none'
-    }
-  })
 })
 
 keyboard.addEventListener('mouseup', (e) => {

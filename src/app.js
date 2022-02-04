@@ -21,7 +21,7 @@ app.get('', (req, res) => {
 });
 
 let newWord = "HELLO"
-let epoch = 1643968800000
+let epoch = 1643973035000
 
 setInterval(() => {
   if (Date.now() > epoch) {

@@ -39,6 +39,10 @@ app.get('/whywouldyouevencheatatthisgame', (req, res) => {
   })
 });
 
+app.get('/thumbnailimageforwebsitepreviews', (req, res) => {
+  res.sendFile(path.join(__dirname, "../media/wordlnt.png"))
+})
+
 app.listen(PORT, () => {
   console.log("It has begun!")
 });

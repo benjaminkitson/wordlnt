@@ -20,22 +20,51 @@ const allWords = words.concat(["aahed", "aalii", "aargh", "aarti", "abaca", "aba
 let wordToGuess
 let wArray
 let completed = false
+let debug = false
+
 const endOverlay = document.querySelector('.end.overlay')
+const endOverlayDetails = document.querySelector('.end.overlay-details')
+const nextTimer = document.querySelector('.next-timer')
+
+let nextGame
+
+function nextTimerGen() {
+  setInterval(() => {
+    const nextMilliseconds = new Promise((resolve, reject) => {
+      resolve(nextGame - Date.now())
+    }).then((result) => {
+        const nextMinutes = Math.ceil(result / 60000)
+        minsNum = (nextMinutes === 1) ? "minute" : "minutes"
+        const timerText = `${nextMinutes} ${minsNum}`
+        if (nextTimer.innerHTML != timerText) {
+          nextTimer.innerHTML = timerText
+        }
+      })
+  }, 1000)
+}
+
 
 fetch('/whywouldyouevencheatatthisgame')
   .then(response => (response.json()))
   .then(data => {
-    wordToGuess = data.word;
+    nextGame = data.epoch + 10800000
+    if (debug === true) {
+      wordToGuess = "DEBUG"
+    } else {
+      wordToGuess = data.word;
+    }
     wArray = wordToGuess.split('');
-    endOverlay.firstElementChild.innerHTML = wordToGuess;
+    endOverlayDetails.firstElementChild.innerHTML = wordToGuess;
     gameData = window.localStorage;
     if (gameData.solved === wordToGuess) {
       endOverlay.style.display = 'flex'
       endOverlay.classList.add('game-end')
     }
-    console.log(gameData)
-
+    nextTimerGen()
   });
+
+
+
 
 let guessArray = []
 let guessCount = 0
@@ -45,6 +74,10 @@ const infoButton = document.querySelector('.info-button')
 const infoOverlay = document.querySelector('.info.overlay')
 const infoOverlayDetails = document.querySelector('.info.overlay-details')
 
+// DEBUG BITS
+
+endOverlay.style.display = 'flex'
+endOverlay.classList.add('game-end')
 
 infoButton.addEventListener('mouseup', () => {
   infoOverlay.style.display = 'flex';

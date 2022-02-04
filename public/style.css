@@ -193,15 +193,37 @@ i {
 
 .overlay-details {
   background-color: rgb(0, 119, 183);
-  color: white;
   width: 250px;
-  height: 100px;
+  height: 200px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   border-radius: 12px;
   font-size: 30px;
-  letter-spacing: 4px;
+  letter-spacing: 6px;
+}
+
+.end-word, .end-timer {
+  color: white;
+  height: 40%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  line-height: 1.5;
+
+}
+
+.end-timer {
+  font-size: 20px;
+  letter-spacing: 2px;
+}
+
+.next-timer {
+  color: white;
+  font-size: 30px;
+  letter-spacing: 2px;
 }
 
 .info.overlay-details {

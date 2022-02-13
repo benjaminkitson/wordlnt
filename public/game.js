@@ -120,7 +120,7 @@ function turn() {
     guess.forEach((cell, i) => {
       if (cell.innerHTML === wArrayClone[i]) {
         const index = wArrayClone.findIndex(letter => letter === cell.innerHTML)
-        wArrayClone.splice(index, 1)
+        wArrayClone.splice(index, 1, '')
         cell.classList.add('correct')
         let key = document.querySelector(`[data-key='${cell.innerHTML}']`)
         if (key.classList.contains('almost')) {
@@ -131,6 +131,7 @@ function turn() {
       }
     })
     guess.forEach((cell, i) => {
+      console.log(wArrayClone)
       if (wArrayClone.includes(cell.innerHTML) && !cell.classList.contains('correct')) {
         cell.classList.add('almost')
         let key = document.querySelector(`[data-key='${cell.innerHTML}']`)

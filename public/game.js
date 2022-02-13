@@ -116,7 +116,34 @@ keyboard.addEventListener('mouseup', (e) => {
 function turn() {
   if (guessArray.length === 5) {
     const guess = Array.from(guesses[guessCount].children)
+    const wArrayClone = wArray.slice()
     guess.forEach((cell, i) => {
+      if (cell.innerHTML === wArrayClone[i]) {
+        const index = wArrayClone.findIndex(letter => letter === cell.innerHTML)
+        wArrayClone.splice(index, 1)
+        cell.classList.add('correct')
+        let key = document.querySelector(`[data-key='${cell.innerHTML}']`)
+        if (key.classList.contains('almost')) {
+          key.classList.replace('almost', 'correct')
+        } else {
+        key.classList.add('correct')
+        }
+      }
+    })
+    guess.forEach((cell, i) => {
+      if (wArrayClone.includes(cell.innerHTML) && !cell.classList.contains('correct')) {
+        cell.classList.add('almost')
+        let key = document.querySelector(`[data-key='${cell.innerHTML}']`)
+        key.classList.add('almost')
+      } else {
+        cell.classList.add('incorrect')
+        let key = document.querySelector(`[data-key='${cell.innerHTML}']`)
+        key.classList.add('incorrect')
+      }
+    })
+
+
+
 
       // Old turn logic
 
@@ -141,7 +168,7 @@ function turn() {
 
 
 
-    })
+
     if (guessArray.join() === wArray.join() || guessCount === 5) {
       gameData.solved = wordToGuess
       gameEnd()

@@ -23,12 +23,7 @@ app.get('', (req, res) => {
 let newWord = "HELLO"
 let epoch = 1643954400000
 
-setInterval(() => {
-  if (Date.now() > epoch) {
-    newWord = wordGen()
-    epoch += 10800000
-  }
-}, 100);
+//changed for debug
 
 app.get('/whywouldyouevencheatatthisgame', (req, res) => {
   const word = newWord
@@ -45,4 +40,10 @@ app.get('/thumbnailimageforwebsitepreviews', (req, res) => {
 
 app.listen(PORT, () => {
   console.log("It has begun!")
+  // setInterval(() => {
+  //   if (Date.now() > epoch) {
+  //     newWord = wordGen()
+  //     epoch += 10800000
+  //   }
+  // }, 100);
 });

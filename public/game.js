@@ -33,6 +33,7 @@ let nextGame
 let guessArray = []
 let guessCount = 0
 
+
 function getWord() {
   gameData.solved = undefined
   gameData.turns = JSON.stringify([])
@@ -127,7 +128,6 @@ function turn() {
   const guess = Array.from(guesses[guessCount].children)
   const wArrayClone = wArray.slice()
   guess.forEach((cell, i) => {
-    gameData.turns.push(cell.innerHTML)
     if (cell.innerHTML === wArrayClone[i]) {
       const index = wArrayClone.findIndex(letter => letter === cell.innerHTML)
       wArrayClone.splice(index, 1, '')
@@ -153,6 +153,23 @@ function turn() {
       key.classList.add('incorrect')
     }
   })
+  const turn = []
+  guess.forEach((cell) => {
+    const letter = {letter: cell.innerHTML};
+    if (cell.classList.contains('correct')) {
+      letter.state = "correct"
+    } else if (cell.classList.contains('almost')) {
+      letter.state = "almost"
+    } else if (cell.classList.contains('incorrect')) {
+      letter.state = "incorrect"
+    }
+    turn.push(letter)
+  })
+
+  const turns = JSON.parse(gameData.turns)
+  turns.push(turn)
+  console.log(turns)
+  gameData.turns = JSON.stringify(turns)
   if (guessArray.join() === wArray.join()) {
     gameData.solved = true
     gameEnd()

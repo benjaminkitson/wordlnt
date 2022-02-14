@@ -162,7 +162,6 @@ function invalid() {
 }
 
 function turn() {
-  if (guessCount > 0) gameData.inProgress = true
   const guess = Array.from(guesses[guessCount].children)
   const wArrayClone = wArray.slice()
   guess.forEach((cell, i) => {
@@ -215,6 +214,7 @@ function turn() {
     gameEnd()
   }
   guessCount++
+  gameData.inProgress = true
   guessArray = []
 }
 

@@ -23,10 +23,12 @@ const letters = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P"
 let wordToGuess
 let wArray
 let debug = false
+
 gameData = localStorage
 
 if (!gameData.isCompleted) gameData.isCompleted = JSON.stringify(false)
 if (!gameData.turns) gameData.turns = JSON.stringify([])
+if (!gameData.started) gameData.nextStarted = JSON.stringify(false)
 
 
 const endOverlay = document.querySelector('.end.overlay')
@@ -106,13 +108,14 @@ function getWord() {
     });
 }
 
-if (JSON.parse(gameData.isCompleted)) getWord()
+if (JSON.parse(!gameData.inProgress)) getWord()
 restoreState()
 
 // Currently the gam cannot distinguish between a user who is mid-round, and a user who has completed a round where a new word has been generated, since the game uses the difference between the wordToGuess and the last completed word to determine done-ness - a completed boolean needs to be introduced somewhere, in such a way that it is not triggered to false on page load. EDIT - This might(?) be fixed now
 
 
 function gameEnd() {
+  gameData.inProgress = false
   gameData.isCompleted = JSON.stringify(true)
   gameData.finished = wordToGuess
   endOverlay.style.display = 'flex'
@@ -158,6 +161,7 @@ function invalid() {
 }
 
 function turn() {
+  if (guessCount > 0) gameData.inProgress = true
   const guess = Array.from(guesses[guessCount].children)
   const wArrayClone = wArray.slice()
   guess.forEach((cell, i) => {
@@ -198,7 +202,6 @@ function turn() {
     }
     turn.push(letter)
   })
-
   const turns = JSON.parse(gameData.turns)
   turns.push(turn)
   console.log(turns)
@@ -213,7 +216,6 @@ function turn() {
   guessCount++
   guessArray = []
 }
-
 
 
 keyboard.addEventListener('mouseup', (e) => {

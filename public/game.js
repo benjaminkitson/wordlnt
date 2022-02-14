@@ -133,6 +133,8 @@ function turn() {
     guess.forEach((cell, i) => {
       console.log(wArrayClone)
       if (wArrayClone.includes(cell.innerHTML) && !cell.classList.contains('correct')) {
+        const index = wArrayClone.findIndex(letter => letter === cell.innerHTML)
+        wArrayClone.splice(index, 1, '')
         cell.classList.add('almost')
         let key = document.querySelector(`[data-key='${cell.innerHTML}']`)
         key.classList.add('almost')
@@ -142,34 +144,6 @@ function turn() {
         key.classList.add('incorrect')
       }
     })
-
-
-
-
-      // Old turn logic
-
-      // if (cell.innerHTML === wArray[i]) {
-      //   cell.classList.add('correct')
-      //   let key = document.querySelector(`[data-key='${cell.innerHTML}']`)
-      //   if (key.classList.contains('almost')) {
-      //     key.classList.replace('almost', 'correct')
-      //   } else {
-      //   key.classList.add('correct')
-      //   }
-      // } else if (wArray.includes(cell.innerHTML)) {
-      //   cell.classList.add('almost')
-      //   let key = document.querySelector(`[data-key='${cell.innerHTML}']`)
-      //   key.classList.add('almost')
-      // } else {
-      //   cell.classList.add('incorrect')
-      //   let key = document.querySelector(`[data-key='${cell.innerHTML}']`)
-      //   key.classList.add('incorrect')
-      // }
-
-
-
-
-
     if (guessArray.join() === wArray.join() || guessCount === 5) {
       gameData.solved = wordToGuess
       gameEnd()

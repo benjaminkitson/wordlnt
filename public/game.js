@@ -33,6 +33,31 @@ let nextGame
 let guessArray = []
 let guessCount = 0
 
+function getWord() {
+  console.log("hello!")
+  fetch('/whywouldyouevencheatatthisgame')
+    .then(response => (response.json()))
+    .then(data => {
+      nextGame = data.epoch
+      if (debug === true) {
+        wordToGuess = "DEBUG"
+      } else {
+        wordToGuess = data.word;
+      }
+      wArray = wordToGuess.split('');
+      endOverlayDetails.firstElementChild.innerHTML = wordToGuess;
+      gameData = window.localStorage;
+      if (gameData.finished === wordToGuess) {
+        endOverlay.style.display = 'flex'
+        endOverlay.classList.add('game-end')
+      } else {
+        endOverlay.style.display = 'none'
+        endOverlay.classList.remove('game-end')
+      }
+      nextTimerGen()
+    });
+}
+
 function nextTimerGen() {
   setInterval(() => {
     const nextMilliseconds = new Promise((resolve, reject) => {
@@ -41,12 +66,17 @@ function nextTimerGen() {
         const nextMinutes = Math.ceil(result / 60000)
         minsNum = (nextMinutes === 1) ? "minute" : "minutes"
         const timerText = `${nextMinutes} ${minsNum}`
-      if (nextTimer.innerHTML != timerText && nextMinutes < 0) {
+        if (nextTimer.innerHTML != timerText && nextMinutes >= 0) {
           nextTimer.innerHTML = timerText
+        } else if (nextTimer.innerHTML != timerText && nextMinutes < 0) {
+          nextTimer.innerHTML = `0 minutes`
+          getWord()
         }
       })
   }, 1000)
 }
+
+getWord()
 
 function gameEnd() {
   endOverlay.style.display = 'flex'
@@ -123,7 +153,7 @@ function turn() {
       }
     })
     if (guessArray.join() === wArray.join() || guessCount === 5) {
-      gameData.solved = wordToGuess
+      gameData.finished = wordToGuess
       gameEnd()
     }
     guessCount++
@@ -133,24 +163,7 @@ function turn() {
   }
 }
 
-fetch('/whywouldyouevencheatatthisgame')
-  .then(response => (response.json()))
-  .then(data => {
-    nextGame = data.epoch
-    if (debug === true) {
-      wordToGuess = "DEBUG"
-    } else {
-      wordToGuess = data.word;
-    }
-    wArray = wordToGuess.split('');
-    endOverlayDetails.firstElementChild.innerHTML = wordToGuess;
-    gameData = window.localStorage;
-    if (gameData.solved === wordToGuess) {
-      endOverlay.style.display = 'flex'
-      endOverlay.classList.add('game-end')
-    }
-    nextTimerGen()
-  });
+
 
 keyboard.addEventListener('mouseup', (e) => {
   if (e.target.getAttribute('data-key') === 'turn') {
@@ -168,17 +181,19 @@ keyboard.addEventListener('mouseup', (e) => {
 })
 
 window.addEventListener('keyup', (e) => {
-  if (e.key === "Enter") {
-    if (allWords.includes(guessArray.join('').toLowerCase())) {
-      turn()
-    } else {
-      invalid()
+  if (gameData.finished !== wordToGuess) {
+    if (e.key === "Enter") {
+      if (allWords.includes(guessArray.join('').toLowerCase())) {
+        turn()
+      } else {
+        invalid()
+      }
+    } else if (e.key === "Backspace") {
+      del()
+    } else if (guessArray.length <= 4) {
+        const letter = e.key.toUpperCase()
+        add(letter)
     }
-  } else if (e.key === "Backspace") {
-    del()
-  } else if (guessArray.length <= 4) {
-      const letter = e.key.toUpperCase()
-      add(letter)
   }
 })
 

@@ -38,6 +38,8 @@ function nextTimerGen() {
         const timerText = `${nextMinutes} ${minsNum}`
       if (nextTimer.innerHTML != timerText && nextMinutes < 0) {
           nextTimer.innerHTML = timerText
+        } else {
+        nextTimer.innerHTML = `0 minutes`
         }
       })
   }, 1000)

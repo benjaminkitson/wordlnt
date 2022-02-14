@@ -45,6 +45,42 @@ function nextTimerGen() {
   }, 1000)
 }
 
+function gameEnd() {
+  endOverlay.style.display = 'flex'
+  setTimeout(() => {
+    endOverlay.classList.add('game-end')
+  }, 1)
+}
+
+function del() {
+  guessArray.pop()
+  const guess = Array.from(guesses[guessCount].children)
+  guess.forEach((cell, i) => {
+    if (guessArray[i]) {
+      cell.innerHTML = guessArray[i]
+    } else {
+      cell.innerHTML = ''
+    }
+  })
+}
+
+function add(letter) {
+  if (letters.includes(letter)) {
+    guessArray.push(letter)
+    const guess = Array.from(guesses[guessCount].children)
+    guess.forEach((cell, i) => {
+      if (guessArray[i]) {
+        cell.innerHTML = guessArray[i]
+      } else {
+        cell.innerHTML = ''
+      }
+    })
+  }
+}
+
+function invalid() {
+
+}
 
 fetch('/whywouldyouevencheatatthisgame')
   .then(response => (response.json()))
@@ -70,7 +106,6 @@ fetch('/whywouldyouevencheatatthisgame')
 
 let guessArray = []
 let guessCount = 0
-let blocked = false;
 
 const infoButton = document.querySelector('.info-button')
 const infoOverlay = document.querySelector('.info.overlay')
@@ -96,7 +131,6 @@ keyboard.addEventListener('mouseup', (e) => {
       if (allWords.includes(guessArray.join('').toLowerCase())) {
         turn()
       } else {
-        blocked = true
         const guess = Array.from(guesses[guessCount].children)
         guess.forEach((cell) => {
           cell.addEventListener('transitionend', (e) => {
@@ -104,30 +138,20 @@ keyboard.addEventListener('mouseup', (e) => {
           })
           cell.classList.add('blocked')
         })
-        blocked = false
         // This almost definitely doesn't work as intended, but for now it seems fine
       }
     } else if (e.target.getAttribute('data-key') === 'del') {
       del()
     } else if (guessArray.length <= 4 && e.target.getAttribute('data-key')) {
-      letter(e)
+      letter = e.target.getAttribute('data-key')
+      add(letter)
     }
   }
 })
 
 window.addEventListener('keyup', (e) => {
   const letter = e.key.toUpperCase()
-  if (letters.includes(letter)) {
-    guessArray.push(letter)
-    const guess = Array.from(guesses[guessCount].children)
-    guess.forEach((cell, i) => {
-      if (guessArray[i]) {
-        cell.innerHTML = guessArray[i]
-      } else {
-        cell.innerHTML = ''
-      }
-    })
-  }
+  add(letter)
 })
 
 function turn() {
@@ -170,35 +194,4 @@ function turn() {
   } else {
     console.log("not enough letters m8")
   }
-}
-
-function gameEnd() {
-  endOverlay.style.display = 'flex'
-  setTimeout(() => {
-    endOverlay.classList.add('game-end')
-  }, 1)
-}
-
-function del() {
-  guessArray.pop()
-  const guess = Array.from(guesses[guessCount].children)
-  guess.forEach((cell, i) => {
-    if (guessArray[i]) {
-      cell.innerHTML = guessArray[i]
-    } else {
-      cell.innerHTML = ''
-    }
-  })
-}
-
-function letter(e) {
-  guessArray.push(e.target.getAttribute('data-key'))
-  const guess = Array.from(guesses[guessCount].children)
-  guess.forEach((cell, i) => {
-    if (guessArray[i]) {
-      cell.innerHTML = guessArray[i]
-    } else {
-      cell.innerHTML = ''
-    }
-  })
 }

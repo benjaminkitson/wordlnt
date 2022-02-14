@@ -36,7 +36,7 @@ function nextTimerGen() {
         const nextMinutes = Math.ceil(result / 60000)
         minsNum = (nextMinutes === 1) ? "minute" : "minutes"
         const timerText = `${nextMinutes} ${minsNum}`
-      if (nextTimer.innerHTML != timerText && nextTimer.innerHTML != "0 minutes") {
+      if (nextTimer.innerHTML != timerText && nextMinutes < 0) {
           nextTimer.innerHTML = timerText
         }
       })

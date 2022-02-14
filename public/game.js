@@ -26,6 +26,7 @@ let debug = false
 gameData = localStorage
 
 if (!gameData.isCompleted) gameData.isCompleted = false
+if (!gameData.turns) gameData.turns = JSON.stringify([])
 
 
 const endOverlay = document.querySelector('.end.overlay')

@@ -21,8 +21,8 @@ const letters = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P"
 
 let wordToGuess
 let wArray
-let completed = false
 let debug = false
+gameData = localStorage
 
 const endOverlay = document.querySelector('.end.overlay')
 const endOverlayDetails = document.querySelector('.end.overlay-details')
@@ -34,7 +34,8 @@ let guessArray = []
 let guessCount = 0
 
 function getWord() {
-  console.log("hello!")
+  gameData.solved = undefined
+  gameData.turns = JSON.stringify([])
   fetch('/whywouldyouevencheatatthisgame')
     .then(response => (response.json()))
     .then(data => {
@@ -46,7 +47,6 @@ function getWord() {
       }
       wArray = wordToGuess.split('');
       endOverlayDetails.firstElementChild.innerHTML = wordToGuess;
-      gameData = window.localStorage;
       if (gameData.finished === wordToGuess) {
         endOverlay.style.display = 'flex'
         endOverlay.classList.add('game-end')
@@ -57,6 +57,8 @@ function getWord() {
       nextTimerGen()
     });
 }
+
+getWord()
 
 function nextTimerGen() {
   setInterval(() => {
@@ -76,9 +78,9 @@ function nextTimerGen() {
   }, 1000)
 }
 
-getWord()
 
 function gameEnd() {
+  gameData.finished = wordToGuess
   endOverlay.style.display = 'flex'
   setTimeout(() => {
     endOverlay.classList.add('game-end')
@@ -122,45 +124,44 @@ function invalid() {
 }
 
 function turn() {
-  if (guessArray.length === 5) {
-    const guess = Array.from(guesses[guessCount].children)
-    const wArrayClone = wArray.slice()
-    guess.forEach((cell, i) => {
-      if (cell.innerHTML === wArrayClone[i]) {
-        const index = wArrayClone.findIndex(letter => letter === cell.innerHTML)
-        wArrayClone.splice(index, 1, '')
-        cell.classList.add('correct')
-        let key = document.querySelector(`[data-key='${cell.innerHTML}']`)
-        if (key.classList.contains('almost')) {
-          key.classList.replace('almost', 'correct')
-        } else {
-          key.classList.add('correct')
-        }
-      }
-    })
-    guess.forEach((cell, i) => {
-      console.log(wArrayClone)
-      if (wArrayClone.includes(cell.innerHTML) && !cell.classList.contains('correct')) {
-        const index = wArrayClone.findIndex(letter => letter === cell.innerHTML)
-        wArrayClone.splice(index, 1, '')
-        cell.classList.add('almost')
-        let key = document.querySelector(`[data-key='${cell.innerHTML}']`)
-        key.classList.add('almost')
+  const guess = Array.from(guesses[guessCount].children)
+  const wArrayClone = wArray.slice()
+  guess.forEach((cell, i) => {
+    gameData.turns.push(cell.innerHTML)
+    if (cell.innerHTML === wArrayClone[i]) {
+      const index = wArrayClone.findIndex(letter => letter === cell.innerHTML)
+      wArrayClone.splice(index, 1, '')
+      cell.classList.add('correct')
+      let key = document.querySelector(`[data-key='${cell.innerHTML}']`)
+      if (key.classList.contains('almost')) {
+        key.classList.replace('almost', 'correct')
       } else {
-        cell.classList.add('incorrect')
-        let key = document.querySelector(`[data-key='${cell.innerHTML}']`)
-        key.classList.add('incorrect')
+        key.classList.add('correct')
       }
-    })
-    if (guessArray.join() === wArray.join() || guessCount === 5) {
-      gameData.finished = wordToGuess
-      gameEnd()
     }
-    guessCount++
-    guessArray = []
-  } else {
-    console.log("not enough letters m8")
+  })
+  guess.forEach((cell, i) => {
+    if (wArrayClone.includes(cell.innerHTML) && !cell.classList.contains('correct')) {
+      const index = wArrayClone.findIndex(letter => letter === cell.innerHTML)
+      wArrayClone.splice(index, 1, '')
+      cell.classList.add('almost')
+      let key = document.querySelector(`[data-key='${cell.innerHTML}']`)
+      key.classList.add('almost')
+    } else {
+      cell.classList.add('incorrect')
+      let key = document.querySelector(`[data-key='${cell.innerHTML}']`)
+      key.classList.add('incorrect')
+    }
+  })
+  if (guessArray.join() === wArray.join()) {
+    gameData.solved = true
+    gameEnd()
+  } else if (guessCount === 5) {
+    gameData.solved = false
+    gameEnd()
   }
+  guessCount++
+  guessArray = []
 }
 
 

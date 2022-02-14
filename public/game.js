@@ -234,7 +234,7 @@ keyboard.addEventListener('mouseup', (e) => {
 })
 
 window.addEventListener('keyup', (e) => {
-  if (guessCount === 0 || JSON.parse(gameData.inProgress) = true) {
+  if (guessCount === 0 || JSON.parse(gameData.inProgress) === true) {
     if (e.key === "Enter") {
       if (allWords.includes(guessArray.join('').toLowerCase())) {
         turn()

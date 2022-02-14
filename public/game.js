@@ -28,7 +28,7 @@ gameData = localStorage
 
 if (!gameData.isCompleted) gameData.isCompleted = JSON.stringify(false)
 if (!gameData.turns) gameData.turns = JSON.stringify([])
-if (!gameData.nextStarted) gameData.nextStarted = JSON.stringify(false)
+if (!gameData.inProgress) gameData.inProgress = JSON.stringify(false)
 
 
 const endOverlay = document.querySelector('.end.overlay')
@@ -234,7 +234,7 @@ keyboard.addEventListener('mouseup', (e) => {
 })
 
 window.addEventListener('keyup', (e) => {
-  if (gameData.finished !== wordToGuess) {
+  if (guessCount === 0 || JSON.parse(gameData.inProgress) = true) {
     if (e.key === "Enter") {
       if (allWords.includes(guessArray.join('').toLowerCase())) {
         turn()

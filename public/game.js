@@ -22,8 +22,11 @@ const letters = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P"
 
 let wordToGuess
 let wArray
-let debug = true
+let debug = false
 gameData = localStorage
+
+if (!gameData.isCompleted) gameData.isCompleted = false
+
 
 const endOverlay = document.querySelector('.end.overlay')
 const endOverlayDetails = document.querySelector('.end.overlay-details')
@@ -46,6 +49,19 @@ function restoreState() {
   guessCount = turns.length
 }
 
+function clearBoard() {
+  const turns = JSON.parse(gameData.turns)
+  for (let count = 0; count < turns.length; count++) {
+    const guess = Array.from(guesses[count].children)
+    turns[count].forEach((letter, i) => {
+      guess[i].innerHTML = '';
+      guess[i].classList.remove(letter.state);
+    })
+  }
+  guessCount = 0
+  gameData.turns = JSON.stringify([])
+}
+
 function getWord() {
   fetch('/whywouldyouevencheatatthisgame')
     .then(response => (response.json()))
@@ -59,10 +75,13 @@ function getWord() {
       wArray = wordToGuess.split('');
       endOverlayDetails.firstElementChild.innerHTML = wordToGuess;
       restoreState()
-      if (gameData.finished === wordToGuess) {
+      if (gameData.finished === wordToGuess && JSON.parse(gameData.isCompleted) === true) {
         endOverlay.style.display = 'flex'
         endOverlay.classList.add('game-end')
       } else {
+        if (JSON.parse(gameData.isCompleted) === true) {
+          clearBoard()
+        }
         endOverlay.style.display = 'none'
         endOverlay.classList.remove('game-end')
       }
@@ -71,6 +90,8 @@ function getWord() {
 }
 
 getWord()
+
+// Currently the gam cannot distinguish between a user who is mid-round, and a user who has completed a round where a new word has been generated, since the game uses the difference between the wordToGuess and the last completed word to determine done-ness - a completed boolean needs to be introduced somewhere, in such a way that it is not triggered to false on page load.
 
 function nextTimerGen() {
   setInterval(() => {
@@ -91,6 +112,7 @@ function nextTimerGen() {
 
 
 function gameEnd() {
+  gameData.isCompleted = JSON.stringify(true)
   gameData.finished = wordToGuess
   endOverlay.style.display = 'flex'
   setTimeout(() => {

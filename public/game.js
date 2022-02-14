@@ -28,7 +28,7 @@ gameData = localStorage
 
 if (!gameData.isCompleted) gameData.isCompleted = JSON.stringify(false)
 if (!gameData.turns) gameData.turns = JSON.stringify([])
-if (!gameData.started) gameData.nextStarted = JSON.stringify(false)
+if (!gameData.nextStarted) gameData.nextStarted = JSON.stringify(false)
 
 
 const endOverlay = document.querySelector('.end.overlay')

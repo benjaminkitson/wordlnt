@@ -30,6 +30,9 @@ const nextTimer = document.querySelector('.next-timer')
 
 let nextGame
 
+let guessArray = []
+let guessCount = 0
+
 function nextTimerGen() {
   setInterval(() => {
     const nextMilliseconds = new Promise((resolve, reject) => {
@@ -79,80 +82,14 @@ function add(letter) {
 }
 
 function invalid() {
-
-}
-
-fetch('/whywouldyouevencheatatthisgame')
-  .then(response => (response.json()))
-  .then(data => {
-    nextGame = data.epoch
-    if (debug === true) {
-      wordToGuess = "DEBUG"
-    } else {
-      wordToGuess = data.word;
-    }
-    wArray = wordToGuess.split('');
-    endOverlayDetails.firstElementChild.innerHTML = wordToGuess;
-    gameData = window.localStorage;
-    if (gameData.solved === wordToGuess) {
-      endOverlay.style.display = 'flex'
-      endOverlay.classList.add('game-end')
-    }
-    nextTimerGen()
-  });
-
-
-
-
-let guessArray = []
-let guessCount = 0
-
-const infoButton = document.querySelector('.info-button')
-const infoOverlay = document.querySelector('.info.overlay')
-const infoOverlayDetails = document.querySelector('.info.overlay-details')
-
-
-infoButton.addEventListener('mouseup', () => {
-  infoOverlay.style.display = 'flex';
-  setTimeout(() => {
-    infoOverlay.classList.add('game-end')
-    infoOverlay.addEventListener('mouseup', (e) => {
-      if (e.target === infoOverlay) {
-        infoOverlay.classList.remove('game-end')
-        infoOverlay.style.display = 'none'
-      }
+  const guess = Array.from(guesses[guessCount].children)
+  guess.forEach((cell) => {
+    cell.addEventListener('transitionend', (e) => {
+      cell.classList.remove('blocked')
     })
-  }, 1)
-})
-
-keyboard.addEventListener('mouseup', (e) => {
-  if (blocked === false) {
-    if (e.target.getAttribute('data-key') === 'turn') {
-      if (allWords.includes(guessArray.join('').toLowerCase())) {
-        turn()
-      } else {
-        const guess = Array.from(guesses[guessCount].children)
-        guess.forEach((cell) => {
-          cell.addEventListener('transitionend', (e) => {
-            cell.classList.remove('blocked')
-          })
-          cell.classList.add('blocked')
-        })
-        // This almost definitely doesn't work as intended, but for now it seems fine
-      }
-    } else if (e.target.getAttribute('data-key') === 'del') {
-      del()
-    } else if (guessArray.length <= 4 && e.target.getAttribute('data-key')) {
-      letter = e.target.getAttribute('data-key')
-      add(letter)
-    }
-  }
-})
-
-window.addEventListener('keyup', (e) => {
-  const letter = e.key.toUpperCase()
-  add(letter)
-})
+    cell.classList.add('blocked')
+  })
+}
 
 function turn() {
   if (guessArray.length === 5) {
@@ -167,7 +104,7 @@ function turn() {
         if (key.classList.contains('almost')) {
           key.classList.replace('almost', 'correct')
         } else {
-        key.classList.add('correct')
+          key.classList.add('correct')
         }
       }
     })
@@ -195,3 +132,70 @@ function turn() {
     console.log("not enough letters m8")
   }
 }
+
+fetch('/whywouldyouevencheatatthisgame')
+  .then(response => (response.json()))
+  .then(data => {
+    nextGame = data.epoch
+    if (debug === true) {
+      wordToGuess = "DEBUG"
+    } else {
+      wordToGuess = data.word;
+    }
+    wArray = wordToGuess.split('');
+    endOverlayDetails.firstElementChild.innerHTML = wordToGuess;
+    gameData = window.localStorage;
+    if (gameData.solved === wordToGuess) {
+      endOverlay.style.display = 'flex'
+      endOverlay.classList.add('game-end')
+    }
+    nextTimerGen()
+  });
+
+keyboard.addEventListener('mouseup', (e) => {
+  if (e.target.getAttribute('data-key') === 'turn') {
+    if (allWords.includes(guessArray.join('').toLowerCase())) {
+      turn()
+    } else {
+      invalid()
+    }
+  } else if (e.target.getAttribute('data-key') === 'del') {
+    del()
+  } else if (guessArray.length <= 4 && e.target.getAttribute('data-key')) {
+    const letter = e.target.getAttribute('data-key')
+    add(letter)
+  }
+})
+
+window.addEventListener('keyup', (e) => {
+  if (e.key === "Enter") {
+    if (allWords.includes(guessArray.join('').toLowerCase())) {
+      turn()
+    } else {
+      invalid()
+    }
+  } else if (e.key === "Backspace") {
+    del()
+  } else if (guessArray.length <= 4) {
+      const letter = e.key.toUpperCase()
+      add(letter)
+  }
+})
+
+
+const infoButton = document.querySelector('.info-button')
+const infoOverlay = document.querySelector('.info.overlay')
+const infoOverlayDetails = document.querySelector('.info.overlay-details')
+
+infoButton.addEventListener('mouseup', () => {
+  infoOverlay.style.display = 'flex';
+  setTimeout(() => {
+    infoOverlay.classList.add('game-end')
+    infoOverlay.addEventListener('mouseup', (e) => {
+      if (e.target === infoOverlay) {
+        infoOverlay.classList.remove('game-end')
+        infoOverlay.style.display = 'none'
+      }
+    })
+  }, 1)
+})

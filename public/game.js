@@ -95,6 +95,12 @@ function clearBoard() {
   })
   guessCount = 0
   gameData.turns = JSON.stringify([])
+  gameData.keyboardState = JSON.stringify(
+    {
+      incorrect: [],
+      almost: [],
+      correct: []
+    })
 }
 
 

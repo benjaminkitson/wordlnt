@@ -18,15 +18,15 @@ const allWords = words.concat(["aahed", "aalii", "aargh", "aarti", "abaca", "aba
 
 const letters = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]
 
-const keyboard = document.querySelector('.keyboard');
-const guesses = document.querySelectorAll('.guess');
+
+// Initialise a bunch of variables etc for use during the game
 
 let wordToGuess
 let wArray
 let debug = false
 
-gameData = localStorage
-
+const keyboard = document.querySelector('.keyboard');
+const guesses = document.querySelectorAll('.guess');
 const endOverlay = document.querySelector('.end.overlay')
 const endOverlayDetails = document.querySelector('.end.overlay-details')
 const nextTimer = document.querySelector('.next-timer')
@@ -36,6 +36,10 @@ let nextGame
 let guessArray = []
 let guessCount = 0
 
+
+// Initialise localstorage object
+
+gameData = localStorage
 
 if (!gameData.isCompleted) gameData.isCompleted = JSON.stringify(false)
 if (!gameData.inProgress) gameData.inProgress = JSON.stringify(false)
@@ -53,9 +57,13 @@ if (!gameData.currentWord) {
   wArray = JSON.parse(gameData.currentWord).split('')
 }
 
-overlayGen()
+
+// Regenerates the board on page refresh and wipes the board respectively
 
 function restoreState() {
+
+  // Called on page load on line 151
+
   const turns = JSON.parse(gameData.turns)
   for (let count = 0; count < turns.length; count++) {
     const guess = Array.from(guesses[count].children)
@@ -104,6 +112,8 @@ function clearBoard() {
 }
 
 
+// Periodically regenerates the text for the next-game countdown
+
 function nextTimerGen() {
   setInterval(() => {
     const nextMilliseconds = new Promise((resolve, reject) => {
@@ -121,6 +131,10 @@ function nextTimerGen() {
   }, 1000)
 }
 
+
+
+//Determine whether the game-end overlay should be present or not, is always called on page initialisation
+
 function overlayGen() {
   nextTimerGen()
   endOverlayDetails.firstElementChild.innerHTML = JSON.parse(gameData.currentWord);
@@ -133,7 +147,11 @@ function overlayGen() {
   }
 }
 
+overlayGen()
+restoreState()
 
+
+//Contacts the server and retrieves the latest word
 
 function getWord() {
   fetch('/whywouldyouevencheatatthisgame')
@@ -148,13 +166,17 @@ function getWord() {
         gameData.currentWord = JSON.stringify(word);
         wArray = word.split('')
       }
-      overlayGen()
     });
 }
 
-if (!JSON.parse(gameData.inProgress)) getWord()
-restoreState()
 
+// Reasonably sure the call below is redundant
+
+// // if (!JSON.parse(gameData.inProgress)) getWord()
+
+
+
+// A series of fairly self explanatory utility functions
 
 function gameEnd() {
   gameData.inProgress = JSON.stringify(false)
@@ -200,6 +222,9 @@ function invalid() {
     cell.classList.add('blocked')
   })
 }
+
+
+// A very large and unwieldy function that carries out most of the operations between turns - this should probably be split into smaller functions
 
 function turn() {
   gameData.inProgress = true
@@ -267,6 +292,8 @@ function turn() {
 }
 
 
+// Functions to determine what various keys should do at different points, depending on when they are pressed etc
+
 keyboard.addEventListener('mouseup', (e) => {
   if (e.target.getAttribute('data-key') === 'turn') {
     if (allWords.includes(guessArray.join('').toLowerCase())) {
@@ -299,6 +326,9 @@ window.addEventListener('keyup', (e) => {
   }
 })
 
+
+
+// Variables and logic relating to the info button (could go in a new file)
 
 const infoButton = document.querySelector('.info-button')
 const infoOverlay = document.querySelector('.info.overlay')

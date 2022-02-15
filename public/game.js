@@ -103,7 +103,7 @@ function nextTimerGen() {
     const nextMilliseconds = new Promise((resolve, reject) => {
       resolve(nextGame - Date.now())
     }).then((result) => {
-      const nextMinutes = Math.floor(result / 60000)
+      const nextMinutes = Math.ceil(result / 60000)
       minsNum = (nextMinutes === 1) ? "minute" : "minutes"
       const timerText = `${nextMinutes} ${minsNum}`
       if (nextTimer.innerHTML != timerText && nextMinutes >= 0) {

@@ -111,9 +111,9 @@ function clearBoard() {
 }
 
 
-// Periodically regenerates the text for the next-game countdown
+// Periodically regenerates the text for the next-game countdown -
 
-function nextTimerGen() {
+function timerPromise() {
   new Promise((resolve, reject) => {
     resolve(gameData.nextWord - Date.now())
   }).then((result) => {
@@ -126,20 +126,11 @@ function nextTimerGen() {
       nextTimer.innerHTML = `0 minutes`
     }
   })
-  setInterval(() => {
-    new Promise((resolve, reject) => {
-      resolve(gameData.nextWord - Date.now())
-    }).then((result) => {
-      const nextMinutes = Math.ceil(result / 60000)
-      minsNum = (nextMinutes === 1) ? "minute" : "minutes"
-      const timerText = `${nextMinutes} ${minsNum}`
-      if (nextTimer.innerHTML != timerText && nextMinutes >= 0) {
-        nextTimer.innerHTML = timerText
-      } else if (nextTimer.innerHTML != timerText && nextMinutes <= 0) {
-        nextTimer.innerHTML = `0 minutes`
-      }
-    })
-  }, 1000)
+}
+
+function nextTimerGen() {
+  timerPromise()
+  setInterval(timerPromise, 1000)
 }
 
 

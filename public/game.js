@@ -69,11 +69,12 @@ function restoreState() {
   states.forEach((state) => {
     keyboardStates[state].forEach((letter) => {
       let key = document.querySelector(`[data-key='${letter}']`)
-      if (!key.classList.contains("correct")) key.classList.add(state)
+      key.classList.add(state)
     })
   })
   guessCount = turns.length
 }
+
 
 function clearBoard() {
   const turns = JSON.parse(gameData.turns)
@@ -84,9 +85,18 @@ function clearBoard() {
       guess[i].classList.remove(letter.state);
     })
   }
+  const keyboardStates = JSON.parse(gameData.keyboardState)
+  const states = Object.keys(keyboardStates)
+  states.forEach((state) => {
+    keyboardStates[state].forEach((letter) => {
+      let key = document.querySelector(`[data-key='${letter}']`)
+      if (key.classList.contains(state)) key.classList.remove(state)
+    })
+  })
   guessCount = 0
   gameData.turns = JSON.stringify([])
 }
+
 
 function nextTimerGen() {
   setInterval(() => {

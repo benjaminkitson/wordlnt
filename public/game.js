@@ -116,7 +116,7 @@ function clearBoard() {
 function nextTimerGen() {
   setInterval(() => {
     const nextMilliseconds = new Promise((resolve, reject) => {
-      resolve(nextGame - Date.now())
+      resolve(gameData.nextWord - Date.now())
     }).then((result) => {
       const nextMinutes = Math.ceil(result / 60000)
       minsNum = (nextMinutes === 1) ? "minute" : "minutes"

@@ -208,7 +208,7 @@ function turn() {
       wArrayClone.splice(index, 1, '')
       cell.classList.add('almost')
       let key = document.querySelector(`[data-key='${cell.innerHTML}']`)
-      key.classList.add('almost')
+      if (key.classList.contains('correct')) key.classList.add('almost')
     } else {
       cell.classList.add('incorrect')
       let key = document.querySelector(`[data-key='${cell.innerHTML}']`)

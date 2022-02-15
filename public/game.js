@@ -27,19 +27,13 @@ let debug = false
 gameData = localStorage
 
 if (!gameData.isCompleted) gameData.isCompleted = JSON.stringify(false)
-if (gameData.inProgress === undefined) gameData.inProgress = JSON.stringify(false)
+if (!gameData.inProgress) gameData.inProgress = JSON.stringify(false)
 if (!gameData.turns) gameData.turns = JSON.stringify([])
-if (!gameData.currentWord) gameData.currentWord = getWord()
-
-
-
-
-
-
-
-
-
-
+if (!gameData.currentWord) {
+  getWord()
+} else {
+  wArray = gameData.currentWord.split()
+}
 
 
 const endOverlay = document.querySelector('.end.overlay')
@@ -95,7 +89,7 @@ function nextTimerGen() {
 
 function overlayGen() {
   nextTimerGen()
-  endOverlayDetails.firstElementChild.innerHTML = wordToGuess;
+  endOverlayDetails.firstElementChild.innerHTML = JSON.parse(gameData.currentWord);
   if (JSON.parse(gameData.isCompleted) === true) {
     endOverlay.style.display = 'flex'
     endOverlay.classList.add('game-end')
@@ -108,25 +102,21 @@ function overlayGen() {
 overlayGen()
 
 function getWord() {
-  console.log("hello")
   fetch('/whywouldyouevencheatatthisgame')
     .then(response => (response.json()))
     .then(data => {
       nextGame = data.epoch
-      if (debug === true) {
-        wordToGuess = "DEBUG"
-      } else {
-        wordToGuess = data.word;
+      word = (debug === true) ? "DEBUG" : data.word
+      if (gameData.currentWord != word) {
+        clearBoard()
+        gameData.currentWord = JSON.stringify(word);
+        wArray = word.split('');
       }
-      wArray = wordToGuess.split('');
     });
 }
 
 if (!JSON.parse(gameData.inProgress)) getWord()
 restoreState()
-
-
-
 
 
 function gameEnd() {

@@ -51,9 +51,9 @@ if (!gameData.currentWord) {
   getWord()
 } else {
   wArray = JSON.parse(gameData.currentWord).split('')
-  overlayGen()
 }
 
+overlayGen()
 
 function restoreState() {
   const turns = JSON.parse(gameData.turns)

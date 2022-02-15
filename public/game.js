@@ -50,12 +50,11 @@ if (!gameData.keyboardState) gameData.keyboardState = JSON.stringify(
     almost: [],
     correct: []
   })
-if (!gameData.currentWord) {
-  gameData.currentWord = JSON.stringify('')
-  getWord()
-} else {
-  wArray = JSON.parse(gameData.currentWord).split('')
-}
+
+getWord()
+
+wArray = JSON.parse(gameData.currentWord).split('')
+
 
 
 // Regenerates the board on page refresh and wipes the board respectively
@@ -157,7 +156,7 @@ function getWord() {
   fetch('/whywouldyouevencheatatthisgame')
     .then(response => (response.json()))
     .then(data => {
-      nextGame = data.epoch
+      gameData.nextWord = data.epoch
       word = (debug === true) ? "DEBUG" : data.word
       if (JSON.parse(gameData.currentWord) != word) {
         clearBoard()
@@ -169,10 +168,6 @@ function getWord() {
     });
 }
 
-
-// Reasonably sure the call below is redundant
-
-// // if (!JSON.parse(gameData.inProgress)) getWord()
 
 
 

@@ -69,7 +69,7 @@ function restoreState() {
   states.forEach((state) => {
     keyboardStates[state].forEach((letter) => {
       let key = document.querySelector(`[data-key='${letter}']`)
-      key.classList.add(state)
+      if (!key.classList.contains("correct")) key.classList.add(state)
     })
   })
   guessCount = turns.length

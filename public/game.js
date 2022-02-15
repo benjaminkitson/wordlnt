@@ -26,16 +26,6 @@ let debug = false
 
 gameData = localStorage
 
-if (!gameData.isCompleted) gameData.isCompleted = JSON.stringify(false)
-if (!gameData.inProgress) gameData.inProgress = JSON.stringify(false)
-if (!gameData.turns) gameData.turns = JSON.stringify([])
-if (!gameData.currentWord) {
-  getWord()
-} else {
-  wArray = gameData.currentWord.split()
-}
-
-
 const endOverlay = document.querySelector('.end.overlay')
 const endOverlayDetails = document.querySelector('.end.overlay-details')
 const nextTimer = document.querySelector('.next-timer')
@@ -44,6 +34,18 @@ let nextGame
 
 let guessArray = []
 let guessCount = 0
+
+
+if (!gameData.isCompleted) gameData.isCompleted = JSON.stringify(false)
+if (!gameData.inProgress) gameData.inProgress = JSON.stringify(false)
+if (!gameData.turns) gameData.turns = JSON.stringify([])
+if (!gameData.currentWord) {
+  getWord()
+} else {
+  wArray = JSON.parse(gameData.currentWord).split('')
+  overlayGen()
+}
+
 
 function restoreState() {
   const turns = JSON.parse(gameData.turns)
@@ -99,7 +101,7 @@ function overlayGen() {
   }
 }
 
-overlayGen()
+
 
 function getWord() {
   fetch('/whywouldyouevencheatatthisgame')
@@ -107,11 +109,14 @@ function getWord() {
     .then(data => {
       nextGame = data.epoch
       word = (debug === true) ? "DEBUG" : data.word
-      if (gameData.currentWord != word) {
+      if (JSON.parse(gameData.currentWord) != word) {
         clearBoard()
+        gameData.isCompleted = false
+        gameData.solved = false
         gameData.currentWord = JSON.stringify(word);
-        wArray = word.split('');
+        wArray = word.split('')
       }
+      overlayGen()
     });
 }
 
@@ -165,6 +170,7 @@ function invalid() {
 }
 
 function turn() {
+  gameData.inProgress = true
   const guess = Array.from(guesses[guessCount].children)
   const wArrayClone = wArray.slice()
   guess.forEach((cell, i) => {
@@ -217,7 +223,6 @@ function turn() {
     gameEnd()
   }
   guessCount++
-  gameData.inProgress = true
   guessArray = []
 }
 
@@ -238,7 +243,7 @@ keyboard.addEventListener('mouseup', (e) => {
 })
 
 window.addEventListener('keyup', (e) => {
-  if (guessCount === 0 || JSON.parse(gameData.inProgress) === true) {
+  if (!JSON.parse(gameData.isCompleted)) {
     if (e.key === "Enter") {
       if (allWords.includes(guessArray.join('').toLowerCase())) {
         turn()

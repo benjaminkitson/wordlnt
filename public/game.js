@@ -146,7 +146,7 @@ function overlayGen() {
   }
 }
 
-overlayGen()
+
 restoreState()
 
 
@@ -165,6 +165,7 @@ function getWord() {
         gameData.currentWord = JSON.stringify(word);
         wArray = word.split('')
       }
+      overlayGen()
     });
 }
 

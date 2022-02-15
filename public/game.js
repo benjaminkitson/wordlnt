@@ -82,6 +82,19 @@ function nextTimerGen() {
   }, 1000)
 }
 
+function overlayGen() {
+  endOverlayDetails.firstElementChild.innerHTML = wordToGuess;
+  if (JSON.parse(gameData.isCompleted) === true) {
+    endOverlay.style.display = 'flex'
+    endOverlay.classList.add('game-end')
+  } else {
+    endOverlay.style.display = 'none'
+    endOverlay.classList.remove('game-end')
+  }
+}
+
+overlayGen()
+
 function getWord() {
   console.log("hello")
   fetch('/whywouldyouevencheatatthisgame')
@@ -94,17 +107,6 @@ function getWord() {
         wordToGuess = data.word;
       }
       wArray = wordToGuess.split('');
-      endOverlayDetails.firstElementChild.innerHTML = wordToGuess;
-      if (gameData.finished === wordToGuess && JSON.parse(gameData.isCompleted) === true) {
-        endOverlay.style.display = 'flex'
-        endOverlay.classList.add('game-end')
-      } else {
-        if (JSON.parse(gameData.isCompleted) === true) {
-          clearBoard()
-        }
-        endOverlay.style.display = 'none'
-        endOverlay.classList.remove('game-end')
-      }
       nextTimerGen()
     });
 }
@@ -118,7 +120,6 @@ restoreState()
 function gameEnd() {
   gameData.inProgress = JSON.stringify(false)
   gameData.isCompleted = JSON.stringify(true)
-  gameData.finished = wordToGuess
   endOverlay.style.display = 'flex'
   setTimeout(() => {
     endOverlay.classList.add('game-end')

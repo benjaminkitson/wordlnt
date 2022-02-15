@@ -222,12 +222,15 @@ function turn() {
     if (cell.classList.contains('correct')) {
       letter.state = "correct"
       if (!keyboard.correct.includes(cell.innerHTML)) keyboard.correct.push(cell.innerHTML)
+      if (keyboard.almost.includes(cell.innerHTML)) keyboard.almost.splice((keyboard.find(cell.innerHTML)), 1)
+      if (keyboard.incorrect.includes(cell.innerHTML)) keyboard.incorrect.splice((keyboard.find(cell.innerHTML)), 1)
     } else if (cell.classList.contains('almost')) {
       letter.state = "almost"
-      if (!keyboard.almost.includes(cell.innerHTML)) keyboard.almost.push(cell.innerHTML)
+      if (!keyboard.almost.includes(cell.innerHTML) && !keyboard.correct.includes(cell.innerHTML)) keyboard.almost.push(cell.innerHTML)
+      if (keyboard.incorrect.includes(cell.innerHTML)) keyboard.incorrect.splice((keyboard.find(cell.innerHTML)), 1)
     } else if (cell.classList.contains('incorrect')) {
       letter.state = "incorrect"
-      if (!keyboard.incorrect.includes(cell.innerHTML)) keyboard.incorrect.push(cell.innerHTML)
+      if (!keyboard.incorrect.includes(cell.innerHTML) && !keyboard.almost.includes(cell.innerHTML) && !keyboard.correct.includes(cell.innerHTML)) keyboard.incorrect.push(cell.innerHTML)
     }
     turn.push(letter)
   })

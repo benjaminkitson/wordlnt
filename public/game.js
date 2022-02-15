@@ -27,8 +27,8 @@ let debug = false
 gameData = localStorage
 
 if (!gameData.isCompleted) gameData.isCompleted = JSON.stringify(false)
-if (!gameData.turns) gameData.turns = JSON.stringify([])
 if (gameData.inProgress === undefined) gameData.inProgress = JSON.stringify(false)
+if (!gameData.turns) gameData.turns = JSON.stringify([])
 
 
 const endOverlay = document.querySelector('.end.overlay')
@@ -208,10 +208,11 @@ function turn() {
   gameData.turns = JSON.stringify(turns)
   if (guessArray.join() === wArray.join()) {
     gameData.solved = true
+    gameEnd()
   } else if (guessCount === 5) {
     gameData.solved = false
+    gameEnd()
   }
-  gameEnd()
   guessCount++
   gameData.inProgress = true
   guessArray = []

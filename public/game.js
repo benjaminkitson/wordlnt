@@ -29,6 +29,17 @@ gameData = localStorage
 if (!gameData.isCompleted) gameData.isCompleted = JSON.stringify(false)
 if (gameData.inProgress === undefined) gameData.inProgress = JSON.stringify(false)
 if (!gameData.turns) gameData.turns = JSON.stringify([])
+if (!gameData.currentWord) gameData.currentWord = getWord()
+
+
+
+
+
+
+
+
+
+
 
 
 const endOverlay = document.querySelector('.end.overlay')
@@ -83,6 +94,7 @@ function nextTimerGen() {
 }
 
 function overlayGen() {
+  nextTimerGen()
   endOverlayDetails.firstElementChild.innerHTML = wordToGuess;
   if (JSON.parse(gameData.isCompleted) === true) {
     endOverlay.style.display = 'flex'
@@ -107,14 +119,14 @@ function getWord() {
         wordToGuess = data.word;
       }
       wArray = wordToGuess.split('');
-      nextTimerGen()
     });
 }
 
 if (!JSON.parse(gameData.inProgress)) getWord()
 restoreState()
 
-// Currently the gam cannot distinguish between a user who is mid-round, and a user who has completed a round where a new word has been generated, since the game uses the difference between the wordToGuess and the last completed word to determine done-ness - a completed boolean needs to be introduced somewhere, in such a way that it is not triggered to false on page load. EDIT - This might(?) be fixed now
+
+
 
 
 function gameEnd() {

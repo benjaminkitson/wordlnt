@@ -40,6 +40,7 @@ if (!gameData.isCompleted) gameData.isCompleted = JSON.stringify(false)
 if (!gameData.inProgress) gameData.inProgress = JSON.stringify(false)
 if (!gameData.turns) gameData.turns = JSON.stringify([])
 if (!gameData.currentWord) {
+  gameData.currentWord = ''
   getWord()
 } else {
   wArray = JSON.parse(gameData.currentWord).split('')

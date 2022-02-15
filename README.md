@@ -1,10 +1,10 @@
 A clone of Wordle!
 
-UPDATE - After some light-hearted complaints from friends and family, the multiple letter mechanic is now fixed! 
-
-Many of the statistics and social features of Wordle aren't in place - (disclaimer) the game currently stores the completed word in local storage and uses that to determine whether a new word has been generated, I will potentially expand upon this local storage concept and implement some game stats in the future. I also reserve the right to randomly push new versions of the game to Heroku - this shouldn't have any effect other than to generate a new word and to implement any features I have been developing.
+UPDATE - After some light-hearted complaints from friends and family, the multiple letter mechanic is now fixed! The game also uses the window.localStorage api to store some stuff that allows the game to rebuild itself on refresh etc.
 
 The game currently runs in the browser at 'https://wordlnt.herokuapp.com/'. If you're feeling tech-savvy, it can also be downloaded and run offline as a Node.js app on a local web server, although the words won't be synced up with the global version for obvious reasons. I actively encourage people to fork, clone, copy and improve upon this.
+
+I have two separate heroku apps running, one for staging and one for 'deployment' - the code on here will always pertain to the app as it is being developed, so it's possible that if it's forked at any given moment, I'll be in the middle of working on it and it'll have some game-breaking bugs - My github etc workflow is a work in progress. 
 
 Credit to Josh Wardle for this, and big respect for keeping it classy, free, and for only permitting one puzzle per day. I couldn't resist making the puzzles a bit more frequent - They'll generate once every three hours (12:00, 3:00, 6:00, 9:00 GMT), just in time for various breaks throughout the day. I'll probably reduce this in future, but it'll do for now. 
 

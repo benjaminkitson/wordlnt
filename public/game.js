@@ -53,8 +53,6 @@ if (!gameData.keyboardState) gameData.keyboardState = JSON.stringify(
 
 getWord()
 
-wArray = JSON.parse(gameData.currentWord).split('')
-
 
 
 // Regenerates the board on page refresh and wipes the board respectively

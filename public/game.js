@@ -161,7 +161,7 @@ function getWord() {
     .then(data => {
       gameData.nextWord = data.epoch
       word = (debug === true) ? "DEBUG" : data.word
-      if (JSON.parse(gameData.currentWord) != word) {
+      if (!gameData.currentWord || JSON.parse(gameData.currentWord)) {
         clearBoard()
         gameData.isCompleted = false
         gameData.solved = false
@@ -257,6 +257,9 @@ function turn() {
   })
   const turn = []
   const keyboard = JSON.parse(gameData.keyboardState)
+
+  // This chunk in particular is super unnecessary - by definition a letter can't be "incorrect" at first and then somehow "correct / almost" later on - some code can definitely be binned here. This logic likely applies elsewhere too.
+
   guess.forEach((cell) => {
     const letter = {value: cell.innerHTML};
     if (cell.classList.contains('correct')) {

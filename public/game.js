@@ -49,7 +49,31 @@ if (!gameData.keyboardState) gameData.keyboardState = JSON.stringify(
     incorrect: [],
     almost: [],
     correct: []
-  })
+  }
+)
+
+
+
+//Contacts the server and retrieves the latest word
+
+function getWord() {
+  fetch('/whywouldyouevencheatatthisgame')
+    .then(response => (response.json()))
+    .then(data => {
+      gameData.nextWord = data.epoch
+      word = (debug === true) ? "DEBUG" : data.word
+      if (!gameData.currentWord || JSON.parse(gameData.currentWord) != word) {
+        clearBoard()
+        gameData.isCompleted = false
+        gameData.solved = false
+        gameData.currentWord = JSON.stringify(word);
+      }
+      wArray = JSON.parse(gameData.currentWord).split('')
+      overlayGen()
+    });
+}
+
+
 
 getWord()
 
@@ -149,28 +173,6 @@ function overlayGen() {
 
 
 restoreState()
-
-
-//Contacts the server and retrieves the latest word
-
-function getWord() {
-  fetch('/whywouldyouevencheatatthisgame')
-    .then(response => (response.json()))
-    .then(data => {
-      gameData.nextWord = data.epoch
-      word = (debug === true) ? "DEBUG" : data.word
-      if (!gameData.currentWord || JSON.parse(gameData.currentWord) != word) {
-        clearBoard()
-        gameData.isCompleted = false
-        gameData.solved = false
-        gameData.currentWord = JSON.stringify(word);
-      }
-      wArray = JSON.parse(gameData.currentWord).split('')
-      overlayGen()
-    });
-}
-
-
 
 
 // A series of fairly self explanatory utility functions

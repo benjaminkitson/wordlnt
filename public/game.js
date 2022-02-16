@@ -278,7 +278,6 @@ function turn() {
   gameData.keyboardState = JSON.stringify(keyboard)
   const turns = JSON.parse(gameData.turns)
   turns.push(turn)
-  console.log(turns)
   gameData.turns = JSON.stringify(turns)
   if (guessArray.join() === wArray.join()) {
     gameData.solved = true

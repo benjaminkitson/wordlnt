@@ -165,7 +165,7 @@ function getWord() {
         gameData.solved = false
         gameData.currentWord = JSON.stringify(word);
       }
-      wArray = gameData.currentWord.split('')
+      wArray = JSON.parse(gameData.currentWord).split('')
       overlayGen()
     });
 }

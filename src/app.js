@@ -40,11 +40,23 @@ app.listen(PORT, () => {
   console.log("It has begun!")
   let hour
   setInterval(() => {
-    const now = new Date(Date.now()).getHours()
-    if (now % 3 === 0 && now !== hour) {
-      epoch = Date.now() + 10800000
-      newWord = wordGen()
-      hour = now
+    const now = new Date(Date.now())
+    if (now.getHours() % 3 === 0 && now.getHours() !== hour && hour) {
+        epoch = Date.now() + 10800000
+        newWord = wordGen()
+        hour = now
+    } else {
+      const currentHours = now.getHours()
+      let threeHours = currentHours
+      while (threeHours % 3 != 0) {
+        threeHours++
+      }
+      const hours = (threeHours - currentHours) - 1
+      const minutes = (60 - now.getMinutes()) - 1
+      const seconds = (60 - now.getSeconds()) - 1
+      const milliseconds = 1000 - now.getMilliseconds()
+      console.log(hours, minutes, seconds, milliseconds)
     }
   }, 100);
+
 });

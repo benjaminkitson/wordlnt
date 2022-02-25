@@ -43,7 +43,7 @@ gameData = localStorage
 
 //test comment
 
-if (!gameData.currentWord == "undefined") {
+if (gameData.currentWord === "undefined") {
   gameData.removeItem("currentWord")
 }
 if (!gameData.isCompleted) gameData.isCompleted = JSON.stringify(false)

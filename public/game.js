@@ -41,6 +41,9 @@ let guessCount = 0
 
 gameData = localStorage
 
+if (!gameData.currentWord == "undefined") {
+  localStorage.removeItem("currentWord")
+}
 if (!gameData.isCompleted) gameData.isCompleted = JSON.stringify(false)
 if (!gameData.inProgress) gameData.inProgress = JSON.stringify(false)
 if (!gameData.turns) gameData.turns = JSON.stringify([])

@@ -20,7 +20,8 @@ app.get('', (req, res) => {
   res.render('index.hbs')
 });
 
-let newWord
+let newWord = wordGen()
+let epoch
 
 app.get('/whywouldyouevencheatatthisgame', (req, res) => {
   const word = newWord
@@ -41,6 +42,7 @@ app.listen(PORT, () => {
   setInterval(() => {
     const now = new Date(Date.now()).getHours()
     if (now % 3 === 0 && now !== hour) {
+      epoch = Date.now() + 10800000
       newWord = wordGen()
       hour = now
     }

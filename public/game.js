@@ -41,8 +41,6 @@ let guessCount = 0
 
 gameData = localStorage
 
-//test comment
-
 if (gameData.currentWord === "undefined") {
   gameData.removeItem("currentWord")
 }

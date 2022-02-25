@@ -42,7 +42,9 @@ app.listen(PORT, () => {
   let hour
   newWord = wordGen()
   setInterval(() => {
-    if (now % 3 === 0 && now != hour && hour) {
+    //testing with hourly in place of every three hours
+    if (now != hour && hour) {
+    // if (now % 3 === 0 && now != hour && hour) {
       epoch += 10800000
       newWord = wordGen()
     }

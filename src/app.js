@@ -20,6 +20,8 @@ app.get('', (req, res) => {
   res.render('index.hbs')
 });
 
+let newWord
+
 app.get('/whywouldyouevencheatatthisgame', (req, res) => {
   const word = newWord
   res.send({

@@ -41,8 +41,10 @@ let guessCount = 0
 
 gameData = localStorage
 
+//test comment
+
 if (!gameData.currentWord == "undefined") {
-  localStorage.removeItem("currentWord")
+  gameData.removeItem("currentWord")
 }
 if (!gameData.isCompleted) gameData.isCompleted = JSON.stringify(false)
 if (!gameData.inProgress) gameData.inProgress = JSON.stringify(false)

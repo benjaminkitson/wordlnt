@@ -20,11 +20,6 @@ app.get('', (req, res) => {
   res.render('index.hbs')
 });
 
-let newWord = "HELLO"
-let epoch = 1644829200000
-
-//changed for debug
-
 app.get('/whywouldyouevencheatatthisgame', (req, res) => {
   const word = newWord
   res.send({
@@ -40,10 +35,12 @@ app.get('/thumbnailimageforwebsitepreviews', (req, res) => {
 
 app.listen(PORT, () => {
   console.log("It has begun!")
+  let hour
   setInterval(() => {
-    if (Date.now() > epoch) {
+    const now = new Date(Date.now()).getHours()
+    if (now % 3 === 0 && now !== hour) {
       newWord = wordGen()
-      epoch += 10800000
+      hour = now
     }
   }, 100);
 });

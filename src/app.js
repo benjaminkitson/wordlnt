@@ -40,7 +40,7 @@ app.listen(PORT, () => {
   epoch = Date.now() + (10800000 - (Date.now() % 10800000))
   let now = new Date(Date.now()).getHours()
   let hour
-  newWord = wordGen()
+  if (!newWord) newWord = wordGen()
   setInterval(() => {
     if (now % 3 === 0 && now != hour && hour) {
       epoch += 10800000

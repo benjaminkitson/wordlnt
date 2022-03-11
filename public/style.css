@@ -82,7 +82,7 @@ body {
   margin: 4px 0px;
 }
 
-.cell {
+.row__cell {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -107,18 +107,18 @@ body {
   width: 100%;
 }
 
-.key-row {
+.keyboard__row {
   display: flex;
   width: 100%;
   align-items: center;
   justify-content: center;
 }
 
-.key-row.middle {
+.keyboard__row.row__middle {
   padding: 0px 12px
 }
 
-.key {
+.row__key {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -132,7 +132,7 @@ body {
   z-index: 2
 }
 
-.key.wide {
+.row__key.key__wide {
   width: 48px;
 }
 

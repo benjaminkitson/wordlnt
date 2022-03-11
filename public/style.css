@@ -179,7 +179,7 @@ i {
   align-items: center;
 }
 
-.overlay-details {
+.overlay__details {
   background-color: rgb(0, 119, 183);
   width: 250px;
   height: 200px;
@@ -194,7 +194,7 @@ i {
 }
 
 
-.end-word, .end-timer {
+.end__word, .end__timer {
   color: white;
   height: 40%;
   display: flex;
@@ -205,7 +205,7 @@ i {
 
 }
 
-.end-timer {
+.end__timer {
   font-size: 20px;
   letter-spacing: 2px;
 }
@@ -217,7 +217,7 @@ i {
   letter-spacing: 2px;
 }
 
-.info.overlay-details {
+.info.overlay__details {
   text-align: center;
   width: 700px;
   height: 400px;

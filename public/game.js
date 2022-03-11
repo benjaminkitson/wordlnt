@@ -28,7 +28,7 @@ let debug = false
 const keyboard = document.querySelector('.keyboard');
 const guesses = document.querySelectorAll('.word-grid__guess');
 const endOverlay = document.querySelector('.end.overlay')
-const endOverlayDetails = document.querySelector('.end.overlay-details')
+const endOverlayDetails = document.querySelector('.end.overlay__details')
 const nextTimer = document.querySelector('.next-timer')
 
 let nextGame
@@ -336,7 +336,7 @@ window.addEventListener('keyup', (e) => {
 
 const infoButton = document.querySelector('.icon-right__info-button')
 const infoOverlay = document.querySelector('.info.overlay')
-const infoOverlayDetails = document.querySelector('.info.overlay-details')
+const infoOverlayDetails = document.querySelector('.info.overlay__details')
 
 infoButton.addEventListener('mouseup', () => {
   infoOverlay.style.display = 'flex';

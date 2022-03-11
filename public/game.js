@@ -26,7 +26,7 @@ let wArray
 let debug = false
 
 const keyboard = document.querySelector('.keyboard');
-const guesses = document.querySelectorAll('.guess');
+const guesses = document.querySelectorAll('.word-grid__guess');
 const endOverlay = document.querySelector('.end.overlay')
 const endOverlayDetails = document.querySelector('.end.overlay-details')
 const nextTimer = document.querySelector('.next-timer')
@@ -334,7 +334,7 @@ window.addEventListener('keyup', (e) => {
 
 // Variables and logic relating to the info button (could go in a new file)
 
-const infoButton = document.querySelector('.info-button')
+const infoButton = document.querySelector('.icon-right__info-button')
 const infoOverlay = document.querySelector('.info.overlay')
 const infoOverlayDetails = document.querySelector('.info.overlay-details')
 

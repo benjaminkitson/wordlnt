@@ -45,6 +45,7 @@ app.listen(PORT, () => {
     if (now % 3 === 0 && now != hour && hour) {
       epoch += 10800000
       newWord = wordGen()
+      hour = now
     }
   }, 100);
   hour = now

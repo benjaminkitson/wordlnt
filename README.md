@@ -1,7 +1,5 @@
 A clone of Wordle!
 
-UPDATE - After some light-hearted complaints from friends and family, the multiple letter mechanic is now fixed! The game also uses the window.localStorage api to store some stuff that allows the game to rebuild itself on refresh etc.
-
 The game currently runs in the browser at 'https://wordlnt.herokuapp.com/'. If you're feeling tech-savvy, it can also be downloaded and run offline as a Node.js app on a local web server, although the words won't be synced up with the global version for obvious reasons. I actively encourage people to fork, clone, copy and improve upon this.
 
 I have two separate heroku apps running, one for staging and one for 'deployment' - the code on here will always pertain to the app as it is being developed, so it's possible that if it's forked at any given moment, I'll be in the middle of working on it and it'll have some game-breaking bugs - My github etc workflow is a work in progress. If you can deduce the staging url you're welcome to try and play the game on that, but as mentioned, it will probably be broken.

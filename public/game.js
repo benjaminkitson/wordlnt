@@ -1,4 +1,4 @@
-import { allWords } from "./words";
+import { someWords } from "./words.js";
 
 const letters = [
   "A",
@@ -31,7 +31,6 @@ const letters = [
 
 // Initialise a bunch of variables etc for use during the game
 
-let wordToGuess;
 let wArray;
 let debug = false;
 
@@ -41,13 +40,12 @@ const endOverlay = document.querySelector(".end.overlay");
 const endOverlayDetails = document.querySelector(".end.overlay__details");
 const nextTimer = document.querySelector(".next-timer");
 
-let nextGame;
-
 let guessArray = [];
 let guessCount = 0;
 
 // Initialise localstorage object
 
+let gameData;
 gameData = localStorage;
 
 if (gameData.currentWord === "undefined") {
@@ -63,14 +61,14 @@ if (!gameData.keyboardState)
     correct: [],
   });
 
-//Contacts the server and retrieves the latest word
+// Contacts the server and retrieves the latest word
 
 function getWord() {
   fetch("/whywouldyouevencheatatthisgame")
     .then((response) => response.json())
     .then((data) => {
       gameData.nextWord = data.epoch;
-      word = debug === true ? "DEBUG" : data.word;
+      const word = debug === true ? "DEBUG" : data.word;
       if (!gameData.currentWord || JSON.parse(gameData.currentWord) != word) {
         clearBoard();
         gameData.isCompleted = false;
@@ -141,7 +139,7 @@ function timerPromise() {
     resolve(gameData.nextWord - Date.now());
   }).then((result) => {
     const nextMinutes = Math.ceil(result / 60000);
-    minsNum = nextMinutes === 1 ? "minute" : "minutes";
+    const minsNum = nextMinutes === 1 ? "minute" : "minutes";
     const timerText = `${nextMinutes} ${minsNum}`;
     if (nextTimer.innerHTML != timerText && nextMinutes >= 0) {
       nextTimer.innerHTML = timerText;
@@ -327,7 +325,7 @@ function turn() {
 
 keyboard.addEventListener("mouseup", (e) => {
   if (e.target.getAttribute("data-key") === "turn") {
-    if (allWordallW.includes(guessArray.join("").toLowerCase())) {
+    if (someWords.includes(guessArray.join("").toLowerCase())) {
       turn();
     } else {
       invalid();
@@ -343,7 +341,7 @@ keyboard.addEventListener("mouseup", (e) => {
 window.addEventListener("keyup", (e) => {
   if (!JSON.parse(gameData.isCompleted)) {
     if (e.key === "Enter") {
-      if (allWords.includes(guessArray.join("").toLowerCase())) {
+      if (someWords.includes(guessArray.join("").toLowerCase())) {
         turn();
       } else {
         invalid();

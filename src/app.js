@@ -1,8 +1,7 @@
 const path = require("path");
 const express = require("express");
 const hbs = require("hbs");
-const request = require("postman-request");
-const wordGen = require("./word-gen.js");
+const words = require("./word-gen.js");
 
 const app = express();
 
@@ -35,17 +34,9 @@ app.get("/thumbnailimageforwebsitepreviews", (_req, res) => {
 });
 
 app.listen(PORT, () => {
-  epoch = Date.now() + (10800000 - (Date.now() % 10800000));
-  let now = new Date(Date.now()).getHours();
-  let hour;
-  if (!newWord) newWord = wordGen();
-  setInterval(() => {
-    now = new Date(Date.now()).getHours();
-    if (now % 3 === 0 && now != hour && hour) {
-      epoch += 10800000;
-      newWord = wordGen();
-      hour = now;
-    }
-  }, 100);
-  hour = now;
+  // The starting date for the clock to run
+  const init = 1694995200000;
+  const indexCalc = Math.floor((Date.now() - init) / 10800000);
+  const indexToUse = indexCalc >= 0 ? indexCalc : 0;
+  newWord = words[indexToUse];
 });

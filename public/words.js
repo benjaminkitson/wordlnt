@@ -1,4 +1,4 @@
-export const allWords = [
+export const someWords = [
   "cigar",
   "rebut",
   "sissy",
@@ -2316,7 +2316,7 @@ export const allWords = [
   "shave",
 ];
 
-const allWords = words.concat([
+const allWords = someWords.concat([
   "aahed",
   "aalii",
   "aargh",

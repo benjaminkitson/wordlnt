@@ -17,11 +17,11 @@ app.get("", (_req, res) => {
   res.render("index.hbs");
 });
 
-let epoch;
-let newWord;
-
 app.get("/whywouldyouevencheatatthisgame", (_req, res) => {
-  const word = newWord;
+  const init = 1694995200000;
+  const indexCalc = Math.floor((Date.now() - init) / 10800000);
+  const indexToUse = indexCalc >= 0 ? indexCalc : 0;
+  word = words[indexToUse];
   res.send({
     word,
     epoch,
@@ -33,10 +33,4 @@ app.get("/thumbnailimageforwebsitepreviews", (_req, res) => {
   res.sendFile(path.join(__dirname, "../media/wordlnt.png"));
 });
 
-app.listen(PORT, () => {
-  // The starting date for the clock to run
-  const init = 1694995200000;
-  const indexCalc = Math.floor((Date.now() - init) / 10800000);
-  const indexToUse = indexCalc >= 0 ? indexCalc : 0;
-  newWord = words[indexToUse];
-});
+app.listen(PORT, () => {});
